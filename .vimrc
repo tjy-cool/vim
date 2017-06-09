@@ -120,8 +120,11 @@ func SetTitle()
 		call append(line("."), "") 
     elseif &filetype == 'python'
         call setline(1,"#!/usr/bin/env python")
-        call append(line("."),"# coding=utf-8")
-	    call append(line(".")+1, "") 
+        call append(line("."),"#-*-coding=utf-8-*-")
+	    call append(line(".")+1,"Author:    ") 
+		call append(line(".")+2,"mail:    ")
+		call append(line(".")+3,"Function:    ") 
+		call append(line(".")+4, "")
 
     elseif &filetype == 'ruby'
         call setline(1,"#!/usr/bin/env ruby")
@@ -172,6 +175,7 @@ map <S-Right> :tabn<CR>
 map! <C-Z> <Esc>zzi
 map! <C-O> <C-Y>,
 map <C-A> ggVG$"+y
+map <Esc><Esc> :w<CR>
 map <F12> gg=G
 map <C-w> <C-w>w
 imap <C-k> <C-y>,
@@ -205,7 +209,7 @@ func! CompileRunGcc()
 		exec "!g++ % -o %<"
 		exec "!time ./%<"
 	elseif &filetype == 'cpp'
-		exec "!g++ % -o %<"
+		exec "!g++ % -std=c++11 -o %<"
 		exec "!time ./%<"
 	elseif &filetype == 'java' 
 		exec "!javac %" 
@@ -228,7 +232,7 @@ endfunc
 map <F8> :call Rungdb()<CR>
 func! Rungdb()
 	exec "w"
-	exec "!g++ % -g -o %<"
+	exec "!g++ % -std=c++11 -g -o %<"
 	exec "!gdb ./%<"
 endfunc
 
